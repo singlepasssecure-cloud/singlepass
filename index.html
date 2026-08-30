@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Single Pass — $1 External Posture Snapshot</title>
+<style>
+  :root{
+    --bg:#0d1117; --card:#161b22; --card2:#1c2330; --border:#2d333b;
+    --fg:#e6edf3; --muted:#8b949e; --accent:#58a6ff; --green:#3fb950;
+    --amber:#d29922; --red:#f85149; --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,'Segoe UI',Inter,sans-serif;}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 80px}
+  a{color:var(--accent)}
+
+  /* hero */
+  .hero{text-align:center;padding:40px 0 28px}
+  .hero h1{font-size:2.1rem;letter-spacing:-.02em}
+  .hero h1 .price{color:var(--green)}
+  .hero p.sub{color:var(--muted);max-width:560px;margin:14px auto 0;font-size:1.05rem}
+  .badge{display:inline-block;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);border:1px solid var(--border);border-radius:99px;padding:4px 14px;margin-bottom:18px}
+
+  /* the sampler — a real report excerpt, partially blurred */
+  .sampler{position:relative;background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:28px 28px 24px;margin:40px 0 8px;font-family:var(--mono);font-size:.86rem}
+  .sampler .watermark{position:absolute;top:12px;right:16px;font-size:.65rem;letter-spacing:.18em;
+    color:var(--muted);text-transform:uppercase}
+  .r-title{font-weight:700;font-size:1rem;margin-bottom:10px}
+  .blur{filter:blur(4.5px);user-select:none;pointer-events:none}
+  .soft{filter:blur(1.2px);user-select:none;pointer-events:none}
+  .r-meta{color:var(--muted);margin-bottom:14px}
+  .r-note{border-left:3px solid var(--accent);padding:8px 12px;color:var(--muted);
+    font-family:inherit;font-size:.78rem;margin-bottom:16px;background:var(--card2);border-radius:0 6px 6px 0}
+  .r-summary{background:var(--card2);border-radius:8px;padding:12px 16px;margin-bottom:16px;display:inline-block}
+  table.r{border-collapse:collapse;width:100%}
+  table.r td{padding:5px 10px 5px 0;border-bottom:1px solid var(--border);font-size:.82rem}
+  table.r td.sev{width:70px;font-weight:700}
+  .sev.high{color:var(--red)} .sev.medium{color:var(--amber)} .sev.low{color:var(--muted)}
+  .fadeout{position:relative}
+  .fadeout::after{content:"";position:absolute;left:0;right:0;bottom:0;height:70px;
+    background:linear-gradient(to bottom,transparent,var(--card));pointer-events:none}
+  .cta-strip{text-align:center;margin:26px 0 0}
+  .cta-strip .hint{color:var(--muted);font-size:.8rem;margin-top:10px}
+
+  /* buy */
+  .buy{display:inline-flex;align-items:center;gap:10px;background:var(--green);color:#0b0f14;
+    font-weight:700;font-size:1.05rem;border:none;border-radius:10px;padding:14px 34px;cursor:pointer}
+  .buy:hover{filter:brightness(1.08)}
+
+  /* sections */
+  section{margin-top:56px}
+  h2{font-size:1.25rem;margin-bottom:14px;letter-spacing:-.01em}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .step{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+  .step .n{color:var(--accent);font-family:var(--mono);font-size:.8rem}
+  .step h3{font-size:.95rem;margin:6px 0 6px}
+  .step p{color:var(--muted);font-size:.85rem}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:640px){.two-col{grid-template-columns:1fr}}
+  .col{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+  .col h3{font-size:.9rem;margin-bottom:10px}
+  .col ul{list-style:none}
+  .col li{font-size:.85rem;color:var(--muted);padding:4px 0 4px 22px;position:relative}
+  .col.yes li::before{content:"✓";color:var(--green);position:absolute;left:0}
+  .col.no li::before{content:"✕";color:var(--red);position:absolute;left:0}
+  footer{margin-top:64px;border-top:1px solid var(--border);padding-top:20px;
+    color:var(--muted);font-size:.78rem;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <span class="badge">Single Pass · One polite automated visit · No exploitation</span>
+    <h1>How exposed is your site, really? <span class="price">$1</span></h1>
+    <p class="sub">An external posture snapshot: what your website tells every visitor about its
+      security posture — headers, TLS, cookies, leaked versions, outdated dependencies.
+      One automated pass, delivered to your inbox in minutes.</p>
+  </div>
+
+  <!-- ====== blurred sampler (real report excerpt) ====== -->
+  <div class="sampler">
+    <span class="watermark">Sample · Redacted</span>
+    <div class="r-title">External Posture Snapshot</div>
+    <div class="r-meta"><span class="blur">Target: https://customer-site-0x3f.example — Generated: 2026-08-30 02:41:07Z</span></div>
+    <div class="r-note">Automated high-level informational snapshot from one passive visit — the same
+      observations any visitor's browser makes. Not a security audit. No exploitation attempted.
+      Findings are indicative, not exhaustive.</div>
+
+    <div class="r-summary">
+      <strong>Summary</strong><br>
+      high: 4 &nbsp;·&nbsp; medium: 2 &nbsp;·&nbsp; low: 4 &nbsp;·&nbsp; info: 1
+    </div>
+
+    <table class="r">
+      <tr><td class="sev high">high</td><td>Dependency lifecycle</td><td>Server-side framework release is EOL (no security fixes)</td></tr>
+      <tr><td class="sev high">high</td><td>HTTP security headers</td><td>Missing 6 standard security headers</td></tr>
+    </table>
+    <div class="fadeout">
+      <table class="r blur">
+        <tr><td class="sev medium">medium</td><td>Session/cookie handling</td><td>Cookie(s) set without Secure / HttpOnly / SameSite</td></tr>
+        <tr><td class="sev low">low</td><td>Information disclosure</td><td>Server advertises product version: ██████ 1.14.0</td></tr>
+        <tr><td class="sev low">low</td><td>Information disclosure</td><td>Server advertises product version: ████ 7.2.24</td></tr>
+        <tr><td class="sev high">high</td><td>████████ ████</td><td>██████████ ██ ███ ███████ ██████ ████ ███████</td></tr>
+        <tr><td class="sev medium">medium</td><td>████ ████</td><td>██████████ ██ ████ ████████ ████████</td></tr>
+        <tr><td class="sev low">low</td><td>████ ████</td><td>██████ ████████ ███████ ████████ ████</td></tr>
+      </table>
+    </div>
+
+    <div class="cta-strip">
+      <a class="buy" id="buy-btn" style="text-decoration:none"
+         href="mailto:singlepasssecure@gmail.com?subject=Single%20Pass%20Snapshot%20Request&body=Payment%20reference%20(Solana%20tx%20signature%20or%20PayPal%20ref)%3A%20%0ATarget%20URL%20to%20scan%3A%20https%3A%2F%2F%0A">$1 — Get your snapshot</a>
+      <div class="hint">Pay <strong>1 USDC</strong> (Solana) to the address below → email us the tx signature + your target URL →
+        categorized report back in minutes. One polite automated visit · max 5 requests · no signup.</div>
+      <div style="margin-top:14px;font-size:.8rem;color:var(--muted)">
+        Pay <strong>1 USDC</strong> (Solana) to: <code style="color:var(--fg)">3DPtYxsU9WB6MYxozWunP7xRwboGnNQJ1ZPJYQMSJcue</code>
+        &nbsp;·&nbsp; then email the tx signature — verified on-chain automatically.
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h3>Submit a URL</h3>
+        <p>Paste the address. Pay $1. No account, no call, no back-and-forth.</p></div>
+      <div class="step"><div class="n">02</div><h3>One passive pass</h3>
+        <p>A single, clearly-identified automated visit — under 5 HTTP requests total.
+        Nothing is probed, fuzzed, or tested.</p></div>
+      <div class="step"><div class="n">03</div><h3>Get the report</h3>
+        <p>Categorized findings with severity flags — what an attacker can learn
+        about you from the outside, before they ever attack.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What this is — and isn't</h2>
+    <div class="two-col">
+      <div class="col yes"><h3>You get</h3><ul>
+        <li>TLS / certificate posture</li>
+        <li>Missing security headers (CSP, HSTS, …)</li>
+        <li>Cookie attribute hygiene</li>
+        <li>Server version disclosure</li>
+        <li>End-of-life dependency fingerprints</li>
+        <li>Mixed-content and disclosure-file checks</li>
+      </ul></div>
+      <div class="col no"><h3>We never do</h3><ul>
+        <li>No port scanning or directory brute-force</li>
+        <li>No exploit attempts or payload testing</li>
+        <li>No login attempts or auth probing</li>
+        <li>No crawling beyond 5 requests</li>
+        <li>No vulnerability locations or PoCs in reports</li>
+        <li>No data retention beyond delivery</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <strong>Disclaimers.</strong> This is an automated informational snapshot of publicly
+    observable configuration, not a security audit, penetration test, or certification.
+    Absence of findings does not mean absence of vulnerabilities. Reports are generated
+    from a single passive visit to publicly accessible endpoints and include no private
+    data. Buyers represent they are authorized to request an assessment of the submitted
+    target. Rate limits apply: one snapshot per target per 24 hours.
+    <br><br>
+    <strong>Site owners:</strong> opt out any time — send the response header
+    <code style="color:var(--fg)">X-Posture-Snapshot-Optout: 1</code> or add a robots.txt
+    rule for <code style="color:var(--fg)">SinglePass</code>; both are
+    honored automatically before any request beyond your homepage. Contact:
+    <a href="mailto:singlepasssecure@gmail.com">singlepasssecure@gmail.com</a>.
+  </footer>
+</div>
+
+</body>
+</html>
